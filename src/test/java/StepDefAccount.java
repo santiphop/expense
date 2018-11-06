@@ -10,24 +10,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class StepDefAccount {
     Account account;
-
-    @Before
-    public void init() {
-        account = new Account();
-    }
-
-    @Given("^a customer with balance (//d+) exists$")
-    public void a_customer_deposit_amount(double amount) {
-        account.deposit(amount);
-    }
-
-    @When("^I deposit (//d+) to my account$")
-    public void account_deposit(double amount) {
-        account.deposit(amount);
-    }
-
-    @Then("^my account balance is (d//+)$")
-    public void new_balance_is(double amount) {
-        assertEquals(amount, account.getBalance());
-    }
+//
+//    @Before
+//    public void init() {
+//        account = new Account();
+//    }
+//
+//    @Given("^a customer with balance (//d+) exists$")
+//    public void a_customer_deposit_amount(double amount) {
+//        account.deposit(amount);
+//    }
+//
+//    @When("^I deposit (//d+) to my account$")
+//    public void account_deposit(double amount) {
+//        account.deposit(amount);
+//    }
+//
+//    @Then("^my account balance is (d//+)$")
+//    public void new_balance_is(double amount) {
+//        assertEquals(amount, account.getBalance());
+//    }
 }
