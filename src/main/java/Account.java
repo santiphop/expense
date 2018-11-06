@@ -1,6 +1,9 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,7 @@ public class Account {
     public Account(String name) {
         this.name = name;
         transactions = new ArrayList<>();
+        readFile("expense_history.txt");
     }
 
     public void add(Transaction transaction) {
@@ -63,4 +67,30 @@ public class Account {
     public ObservableList<Transaction> getList() {
         return FXCollections.observableArrayList(transactions);
     }
+
+    private void readFile(String filename) {
+        try (BufferedReader buffer = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = buffer.readLine()) != null) {
+                // "\\s" == any spaces
+                String[] splitLine = line.split("\\s+");
+                add(new Transaction(
+                        convertToDate(splitLine[0]), Double.parseDouble(splitLine[1]), splitLine[2]
+                ));
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private LocalDate convertToDate(String currentDate) {
+        String[] date = currentDate.split("-");
+        int[] intDate = new int[3];
+        for (int i = 0; i < 3; i++) {
+            intDate[i]=Integer.parseInt(date[i]);
+        }
+        return LocalDate.of(intDate[0], intDate[1], intDate[2]);
+    }
+
 }

@@ -40,13 +40,13 @@ public class EditpageController {
     @FXML
     void cancel(ActionEvent event) {
         changePage("homepage.fxml", event);
-        System.out.println();
     }
 
     @FXML
     void edit(ActionEvent event) {
         selectedTransaction.setAmount(Double.parseDouble(amountTextField.getText()));
         System.out.println(account.formatContent());
+//        HomepageController.tableView.getItems().clear();
         writeFile(account.formatContent(), "expense_history.txt");
         changePage("homepage.fxml", event);
     }

@@ -1,4 +1,3 @@
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +16,6 @@ public class HomepageController {
     private static final String filename = "expense_history.txt";
     private static Account account = new Account(nameAccount);
 
-    static String[] select = new String[3];
     private static Transaction selectedTransaction;
 
     @FXML
@@ -47,7 +45,6 @@ public class HomepageController {
     void initialize(){
         nameLabel.setText(account.getName());
         dateField.setText(String.valueOf(LocalDate.now()));
-        readFile(filename);
         displayTable();
     }
 
@@ -68,12 +65,6 @@ public class HomepageController {
     @FXML
     void edit(ActionEvent event){
         selectedTransaction = tableView.getSelectionModel().getSelectedItem();
-//        select[0] = String.valueOf(selectedTransaction.getDate());
-//        select[1] = String.valueOf(selectedTransaction.getAmount());
-//        select[2] = String.valueOf(selectedTransaction.getNote());
-//        select[3] = String.valueOf(account.getIndex(selectedTransaction));
-//
-
         changePage("editpage.fxml", event);
 
     }
@@ -119,23 +110,6 @@ public class HomepageController {
             stage.show();
         } catch(IOException e1){
             e1.printStackTrace();
-        }
-    }
-
-
-    private void readFile(String filename) {
-        try (BufferedReader buffer = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = buffer.readLine()) != null) {
-                // "\\s" == any spaces
-                String[] splitLine = line.split("\\s+");
-                account.add(new Transaction(
-                        convertToDate(splitLine[0]), Double.parseDouble(splitLine[1]), splitLine[2]
-                ));
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

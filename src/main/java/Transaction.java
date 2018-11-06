@@ -9,7 +9,7 @@ public class Transaction {
 
     public Transaction(LocalDate date, double amount, String note) {
         this.amount = amount;
-        type = (amount >= 0) ? "deposit" : "expense";
+        checkType();
         this.date = date;
         this.category = "undefined";
         this.note = (note.length() == 0) ? "undefined" : note;
@@ -36,6 +36,7 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+        checkType();
     }
 
     public void setDate(LocalDate date) {
@@ -72,5 +73,9 @@ public class Transaction {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    private void checkType() {
+        type = (amount >= 0) ? "deposit" : "expense";
     }
 }
