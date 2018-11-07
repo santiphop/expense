@@ -1,9 +1,9 @@
 import java.time.LocalDate;
 
 public class Transaction {
+    private LocalDate date;
     private double amount;
     private String type;
-    private LocalDate date;
     private String category;
     private String note;
 
@@ -13,14 +13,6 @@ public class Transaction {
         this.date = date;
         this.category = "undefined";
         this.note = (note.length() == 0) ? "undefined" : note;
-    }
-
-    public Transaction(double amount) {
-        this(LocalDate.now(), amount, "aaaa");
-    }
-
-    public Transaction(LocalDate date, double amount) {
-        this(date, amount, "bbbb");
     }
 
     public String formatContent() {

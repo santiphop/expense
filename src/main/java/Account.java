@@ -15,10 +15,14 @@ public class Account {
     private String name;
     private List<Transaction> transactions;
 
-    public Account(String name) {
+    public Account(String name, String filename) {
         this.name = name;
         transactions = new ArrayList<>();
-        readFile("expense_history.txt");
+        if (filename.length() > 0) readFile(filename);
+    }
+
+    public Account(String name) {
+        this(name, "");
     }
 
     public void add(Transaction transaction) {
@@ -27,10 +31,6 @@ public class Account {
 
     public boolean remove(Transaction transaction) {
         return transactions.remove(transaction);
-    }
-
-    public Transaction getTransaction(int i) {
-        return transactions.get(i);
     }
 
     public String formatContent() {
@@ -42,11 +42,7 @@ public class Account {
         return content;
     }
 
-    public int getIndex(Transaction transaction) {
-        return transactions.indexOf(transaction);
-    }
-
-    public double getCurrency() {
+    public double getBalance() {
         double currency = 0;
         for (Transaction t :
                 transactions) {
@@ -55,10 +51,6 @@ public class Account {
         return currency;
     }
 
-    @Override
-    public String toString() {
-        return Double.toString(getCurrency());
-    }
 
     public String getName() {
         return name;

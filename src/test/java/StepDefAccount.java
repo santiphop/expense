@@ -3,6 +3,8 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -10,12 +12,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class StepDefAccount {
     Account account;
-//
-//    @Before
-//    public void init() {
-//        account = new Account();
-//    }
-//
+
+    @Before
+    public void init() {
+        account = new Account(Main.nameAccount);
+    }
+
+    @Given("^a user with balance (//d+) exists$")
+    void deposit_init(double amount) {
+        account.add(new Transaction(LocalDate.now(), amount, ""));
+    }
+
+    @When("^I deposit (//d+)$")
+    void deposit(double amount) {
+        account.add(new Transaction(LocalDate.now(), amount, ""));
+    }
+
+    @When("^I expense (//d+)$")
+    void expense(double amount) {
+        account.add(new Transaction(LocalDate.now(), - amount, ""));
+    }
+
+    @Then("^my account have balance (//d+) exists$")
+    void balance(double amount) {
+        assertEquals(amount, account.getBalance());
+    }
+
+
 //    @Given("^a customer with balance (//d+) exists$")
 //    public void a_customer_deposit_amount(double amount) {
 //        account.deposit(amount);

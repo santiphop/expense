@@ -45,9 +45,7 @@ public class EditpageController {
     @FXML
     void edit(ActionEvent event) {
         selectedTransaction.setAmount(Double.parseDouble(amountTextField.getText()));
-        System.out.println(account.formatContent());
-//        HomepageController.tableView.getItems().clear();
-        writeFile(account.formatContent(), "expense_history.txt");
+        writeFile(account.formatContent(), Main.filename);
         changePage("homepage.fxml", event);
     }
 

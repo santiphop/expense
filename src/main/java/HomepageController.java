@@ -11,10 +11,7 @@ import java.time.LocalDate;
 
 public class HomepageController {
 
-
-    private static final String nameAccount = "Santiphop";
-    private static final String filename = "expense_history.txt";
-    private static Account account = new Account(nameAccount);
+    private static Account account = new Account(Main.nameAccount, Main.filename);
 
     private static Transaction selectedTransaction;
 
@@ -59,7 +56,7 @@ public class HomepageController {
         displayTable();
         clearAllTextField();
         String content = currentTransaction.formatContent();
-        writeFile(content, filename);
+        writeFile(content, Main.filename);
     }
 
     @FXML

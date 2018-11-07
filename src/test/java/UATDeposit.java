@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         format = {"pretty", "html:target/cucumber"},
-        features = {"classpath:features/deposit.feature"}
+        features = {"classpath:features/add.feature"}
 )
 public class UATDeposit {
 
