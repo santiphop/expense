@@ -10,19 +10,20 @@ import javafx.stage.Stage;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class EditpageController {
-    Transaction selectedTransaction;
-    Account account;
+    private Transaction selectedTransaction;
+    private Account account;
 
     @FXML
     Label nameLabel;
     @FXML
-    Label dateLabel;
+    TextField dateTextField;
     @FXML
     TextField amountTextField;
     @FXML
-    Label noteLabel;
+    TextField noteTextField;
     @FXML
     Button cancelButton;
     @FXML
@@ -30,11 +31,12 @@ public class EditpageController {
 
     @FXML
     void initialize() {
+        nameLabel.setText(HomepageController.getAccount().getName());
         selectedTransaction = HomepageController.getSelectedTransaction();
         account = HomepageController.getAccount();
-        dateLabel.setText(String.valueOf(selectedTransaction.getDate()));
+        dateTextField.setText(String.valueOf(selectedTransaction.getDate()));
         amountTextField.setText(String.valueOf(selectedTransaction.getAmount()));
-        noteLabel.setText(String.valueOf(selectedTransaction.getNote()));
+        noteTextField.setText(String.valueOf(selectedTransaction.getNote()));
     }
 
     @FXML
@@ -44,7 +46,9 @@ public class EditpageController {
 
     @FXML
     void edit(ActionEvent event) {
+        selectedTransaction.setDate(convertToDate(dateTextField.getText()));
         selectedTransaction.setAmount(Double.parseDouble(amountTextField.getText()));
+        selectedTransaction.setNote(amountTextField.getText());
         writeFile(account.formatContent(), Main.filename);
         changePage("homepage.fxml", event);
     }
@@ -70,6 +74,15 @@ public class EditpageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private LocalDate convertToDate(String currentDate) {
+        String[] date = currentDate.split("-");
+        int[] intDate = new int[3];
+        for (int i = 0; i < 3; i++) {
+            intDate[i]=Integer.parseInt(date[i]);
+        }
+        return LocalDate.of(intDate[0], intDate[1], intDate[2]);
     }
 
 }

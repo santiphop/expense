@@ -8,13 +8,13 @@ public class JDBCSqliteConnection {
             Connection conn = DriverManager.getConnection(dbURL);
 
             if (conn != null) {
-                System.out.println("Connected to the database....");
+                System.out.println("Connected to the database.");
                 // display database information
                 DatabaseMetaData dm = conn.getMetaData();
                 System.out.println("Driver name: " + dm.getDriverName());
                 System.out.println("Product name: " + dm.getDatabaseProductName());
 
-                System.out.println("----- Data in Book table -----");
+                System.out.println("----- Data in Transactions table -----");
 
                 String query = "select * from transactions";
                 Statement statement = conn.createStatement();

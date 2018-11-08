@@ -15,6 +15,14 @@ public class Transaction {
         this.note = (note.length() == 0) ? "undefined" : note;
     }
 
+    public Transaction(LocalDate date, double amount, String type, String note) {
+        this.amount = amount;
+        this.type = type;
+        this.date = date;
+        this.category = "undefined";
+        this.note = (note.length() == 0) ? "undefined" : note;
+    }
+
     public String formatContent() {
         String content = "";
         content += date;

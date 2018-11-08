@@ -18,39 +18,65 @@ public class StepDefAccount {
         account = new Account(Main.nameAccount);
     }
 
-    @Given("^a user with balance (//d+) exists$")
-    void deposit_init(double amount) {
+    @Given("^a user with balance (\\d+) exists$")
+    public void add_deposit_init(double amount) {
         account.add(new Transaction(LocalDate.now(), amount, ""));
     }
 
-    @When("^I deposit (//d+)$")
-    void deposit(double amount) {
+    @When("^I deposit (\\d+)$")
+    public void deposit(double amount) {
         account.add(new Transaction(LocalDate.now(), amount, ""));
     }
 
-    @When("^I expense (//d+)$")
-    void expense(double amount) {
+    @When("^I expense (\\d+)$")
+    public void expense(double amount) {
         account.add(new Transaction(LocalDate.now(), - amount, ""));
     }
 
-    @Then("^my account have balance (//d+) exists$")
-    void balance(double amount) {
+    @Then("^my account have balance (\\d+) exists$")
+    public void balanceMoreThan0(double amount) {
         assertEquals(amount, account.getBalance());
     }
 
+    @Then("^my account is in debt for (\\d+)$")
+    public void balanceLessThan0(double amount) {
+        assertEquals(amount, - account.getBalance());
+    }
 
-//    @Given("^a customer with balance (//d+) exists$")
-//    public void a_customer_deposit_amount(double amount) {
-//        account.deposit(amount);
-//    }
-//
-//    @When("^I deposit (//d+) to my account$")
-//    public void account_deposit(double amount) {
-//        account.deposit(amount);
-//    }
-//
-//    @Then("^my account balance is (d//+)$")
-//    public void new_balance_is(double amount) {
-//        assertEquals(amount, account.getBalance());
-//    }
+    Transaction transaction;
+
+    @Given("^a transaction (\\S+) with (\\d+) (\\S+) at (\\d+)-(\\d+)-(\\d+)$")
+    public void edit_deposit_init(String note, double amount, String type, int year, int month, int day) {
+        transaction = new Transaction(LocalDate.of(year, month, day), amount, type, note);
+    }
+
+    @When("^I edit date to (\\d+)-(\\d+)-(\\d+)$")
+    public void edit_date(int year, int month, int day) {
+        transaction.setDate(LocalDate.of(year, month, day));
+    }
+
+    @When("^I edit amount to (\\d+)")
+    public void edit_amount(double amount) {
+        transaction.setAmount(amount);
+    }
+
+    @When("^I change type$")
+    public void edit_type() {
+        transaction.setAmount(-transaction.getAmount());
+    }
+
+    @When("^I edit note to (\\S+)$")
+    public void edit_note(String note) {
+        transaction.setNote(note);
+    }
+
+    @Then("^transaction is (\\S+) with (\\d+) (\\S+) at (\\d+)-(\\d+)-(\\d+)")
+    public void format(String note, double amount, String type, int year, int month, int day) {
+        assertEquals(note, transaction.getNote());
+        assertEquals(amount, Math.abs(transaction.getAmount()));
+        assertEquals(type, transaction.getType());
+        assertEquals(LocalDate.of(year, month, day), transaction.getDate());
+    }
+
+
 }

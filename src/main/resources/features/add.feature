@@ -1,8 +1,8 @@
-Feature : Add a transaction
+Feature: Add a transaction
     As a user
     I want to add income and expense
 
-Background :
+Background:
     Given a user with balance 200 exists
 
 Scenario: Deposit
@@ -15,4 +15,4 @@ Scenario: Expense
 
 Scenario: Expense more than Balance
     When I expense 250
-    Then my account have balance -50 exists
+    Then my account is in debt for 50
