@@ -5,10 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class EditpageController {
     private Transaction selectedTransaction;
@@ -68,7 +65,7 @@ public class EditpageController {
         if (sRadio != null)
             selectedTransaction.setType(sRadio.toLowerCase());
         selectedTransaction.setNote(noteTextField.getText());
-        MyHeader.writeFile(account.formatContent(), Main.filename, false);
+        MyHeader.writeTextFile(account.formatContent(), Main.txtfilename, false);
         changePage("homepage.fxml", event);
     }
 

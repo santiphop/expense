@@ -8,7 +8,8 @@ import java.io.IOException;
 
 public class Main extends Application {
 
-    public static final String filename = "expense_history.txt";
+    public static final String txtfilename = "expense_history.txt";
+    public static final String dbfilename = "expense.db";
     public static final String nameAccount = "Santiphop";
 
     public static void main(String[] args) {

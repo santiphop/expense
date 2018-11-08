@@ -48,17 +48,19 @@
       <Button fx:id="balanceButton" layoutX="33.0" layoutY="397.0" mnemonicParsing="false" onAction="#showBalance" text="Balance" />
       <Button fx:id="incomeButton" layoutX="149.0" layoutY="397.0" mnemonicParsing="false" onAction="#showIncome" text="Income" />
       <Button fx:id="expenseButton" layoutX="265.0" layoutY="397.0" mnemonicParsing="false" onAction="#showExpense" text="Expense" />
-      <Label fx:id="amountLabel" alignment="CENTER_RIGHT" layoutX="110.0" layoutY="470.0" prefHeight="26.0" prefWidth="74.0">
+      <Label fx:id="amountLabel" alignment="CENTER_RIGHT" layoutX="86.0" layoutY="476.0" prefHeight="26.0" prefWidth="149.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="thb" layoutX="195.0" layoutY="470.0" text="THB" visible="false">
+      <Label fx:id="thb" layoutX="246.0" layoutY="476.0" text="THB" visible="false">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <RadioButton fx:id="depositRadio" layoutX="52.0" layoutY="240.0" mnemonicParsing="false" onAction="#depositRadioSelect" text="Deposit" />
       <RadioButton fx:id="expenseRadio" layoutX="186.0" layoutY="240.0" mnemonicParsing="false" onAction="#expenseRadioSelect" text="Expense" />
+      <RadioButton fx:id="txtFileRadio" layoutX="65.0" layoutY="41.0" mnemonicParsing="false" onAction="#txtFileRadioSelect" text="expense_history.txt" />
+      <RadioButton fx:id="dbFileRadio" layoutX="231.0" layoutY="41.0" mnemonicParsing="false" onAction="#dbFileRadioSelect" text="expense.db" />
     </children>
 </AnchorPane>

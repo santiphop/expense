@@ -7,6 +7,7 @@ public class Transaction {
     private String type;
     private String category;
     private String note;
+    private MyContentFormatter contentFormatter;
 
     public Transaction(LocalDate date, double amount, String type, String note) {
         if (amount >= 0) {
@@ -23,8 +24,7 @@ public class Transaction {
     }
 
     public String formatContent() {
-        return String.format("%4d  %10s%11.2f%10s      %-10s\n",
-                id, String.valueOf(date), amount, type, note);
+        return contentFormatter.contentFormat();
     }
 
     public void setAmount(double amount) {
@@ -76,6 +76,14 @@ public class Transaction {
         this.type = type;
     }
 
+    public MyContentFormatter getContentFormatter() {
+        return contentFormatter;
+    }
+
+    public void setContentFormatter(MyContentFormatter contentFormatter) {
+        this.contentFormatter = contentFormatter;
+    }
+
     private void checkType() {
         if (amount >= 0) {
             type = "deposit";
@@ -84,5 +92,18 @@ public class Transaction {
             amount = -amount;
         }
         type = (amount >= 0) ? "deposit" : "expense";
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", date=" + date +
+                ", amount=" + amount +
+                ", type='" + type + '\'' +
+                ", category='" + category + '\'' +
+                ", note='" + note + '\'' +
+                ", contentFormatter=" + contentFormatter +
+                '}';
     }
 }

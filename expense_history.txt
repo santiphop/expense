@@ -8,5 +8,9 @@
    7  2018-11-08    1500.00   expense      mouse
    8  2018-11-01   15000.00   deposit      salary
    9  2018-11-01   11111.25   deposit      salary
-  10  2018-11-01   11111.25   deposit      salary
-  11  2018-11-08     123.00   deposit      undefined
+  10  2018-11-08     123.00   deposit      undefined
+  11  2018-11-08      13.00   expense      undefined 
+  12  2018-11-08       1.00   deposit      undefined 
+  13  2018-11-08       2.00   deposit      undefined 
+  14  2018-11-08       2.00   expense      undefined 
+  15  2018-11-09       8.00   expense      undefined 

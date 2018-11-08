@@ -11,14 +11,22 @@ import java.time.LocalDate;
 
 public class HomepageController {
 
-    private static Account account = new Account(Main.nameAccount, Main.filename);
+    private static Account accountText = new Account(Main.nameAccount, Main.txtfilename);
+    private static Account accountDB = new Account(Main.nameAccount, Main.dbfilename);
 
+    private static Account selectedAccount;
     private static Transaction selectedTransaction;
 
-    ToggleGroup typeGroup = new ToggleGroup();
+    private ToggleGroup importFileGroup = new ToggleGroup();
+    private ToggleGroup typeGroup = new ToggleGroup();
 
-    private String sRadio;
+    private String sFileRadio;
+    private String sTypeRadio;
 
+    @FXML
+    protected RadioButton txtFileRadio;
+    @FXML
+    protected RadioButton dbFileRadio;
     @FXML
     protected Label nameLabel;
     @FXML
@@ -58,38 +66,61 @@ public class HomepageController {
     protected TableColumn noteCol;
 
     @FXML
+    void txtFileRadioSelect() {
+        sFileRadio = txtFileRadio.getText();
+        selectedAccount = accountText;
+        displayTextTable(sFileRadio);
+    }
+
+    @FXML
+    void dbFileRadioSelect() {
+        sFileRadio = dbFileRadio.getText();
+        selectedAccount = accountDB;
+        displayTextTable(sFileRadio);
+    }
+
+    @FXML
     void depositRadioSelect() {
-        sRadio = depositRadio.getText();
+        sTypeRadio = depositRadio.getText();
     }
 
     @FXML
     void expenseRadioSelect() {
-        sRadio = expenseRadio.getText();
+        sTypeRadio = expenseRadio.getText();
     }
 
     @FXML
     void initialize(){
-        nameLabel.setText(account.getName());
+        nameLabel.setText(accountText.getName());
         dateField.setText(String.valueOf(LocalDate.now()));
+        txtFileRadio.setToggleGroup(importFileGroup);
+        dbFileRadio.setToggleGroup(importFileGroup);
         depositRadio.setToggleGroup(typeGroup);
         expenseRadio.setToggleGroup(typeGroup);
-        displayTable();
+//        displayTable();
     }
 
     @FXML
     void add(ActionEvent event){
         String currentDate = dateField.getText();
         String currentAmount = amountField.getText();
-        String currentType = sRadio;
+        String currentType = sTypeRadio;
         String currentNote = noteField.getText();
         double amount = Double.parseDouble(currentAmount);
         String type = currentType.toLowerCase();
         Transaction currentTransaction = new Transaction(MyHeader.convertToDate(currentDate), amount, type, currentNote);
-        account.add(currentTransaction);
-        displayTable();
+        addTransaction(selectedAccount, currentTransaction);
+        displayTextTable(sFileRadio);
         clearAllTextField();
-        String content = currentTransaction.formatContent();
-        MyHeader.writeFile(content, Main.filename, true);
+    }
+
+    private void addTransaction(Account account, Transaction currentTransaction) {
+        account.add(currentTransaction);
+        System.out.println(currentTransaction.formatContent());
+        if (account.getFilename().contains(".txt"))
+            MyHeader.writeTextFile(currentTransaction.formatContent(), account.getFilename(), true);
+        if (account.getFilename().contains(".db"))
+            MyHeader.writeDBFile(currentTransaction.formatContent(), account.getFilename());
     }
 
     @FXML
@@ -100,19 +131,19 @@ public class HomepageController {
 
     @FXML
     void showBalance(ActionEvent event) {
-        amountLabel.setText(String.valueOf(account.getBalance()));
+        amountLabel.setText(String.valueOf(accountText.getBalance()));
         thb.setVisible(true);
     }
 
     @FXML
     void showIncome(ActionEvent event) {
-        amountLabel.setText(String.valueOf(account.getDeposit()));
+        amountLabel.setText(String.valueOf(accountText.getDeposit()));
         thb.setVisible(true);
     }
 
     @FXML
     void showExpense(ActionEvent event) {
-        amountLabel.setText(String.valueOf(account.getExpense()));
+        amountLabel.setText(String.valueOf(accountText.getExpense()));
         thb.setVisible(true);
     }
 
@@ -121,7 +152,7 @@ public class HomepageController {
     }
 
     public static Account getAccount() {
-        return account;
+        return selectedAccount;
     }
 
     private void clearAllTextField() {
@@ -129,12 +160,15 @@ public class HomepageController {
         noteField.setText("");
     }
 
-    private void displayTable() {
+    private void displayTextTable(String fileType) {
         dateCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("date"));
         amountCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("amount"));
         typeCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("type"));
         noteCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("note"));
-        tableView.setItems(account.getList());
+        if (fileType.contains(".txt"))
+            tableView.setItems(accountText.getList());
+        if (fileType.contains(".db"))
+            tableView.setItems(accountDB.getList());
         tableView.getColumns().setAll(dateCol, amountCol, typeCol, noteCol);
     }
 

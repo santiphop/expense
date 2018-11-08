@@ -1,9 +1,6 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +9,19 @@ import java.util.List;
  */
 public class Account {
     private String name;
+    private String filename;
     private List<Transaction> transactions;
 
     public Account(String name, String filename) {
         this.name = name;
+        this.filename = filename;
         transactions = new ArrayList<>();
-        if (filename.length() > 0) MyHeader.readFile(this, filename);
+        if (filename.length() > 0)
+            if (filename.contains(".txt"))
+                MyHeader.readTextFile(this, filename);
+            if (filename.contains(".db"))
+                MyHeader.readDBFile(this, filename);
+
     }
 
     public Account(String name) {
@@ -27,6 +31,10 @@ public class Account {
     public void add(Transaction transaction) {
         transactions.add(transaction);
         transaction.setId(transactions.indexOf(transaction));
+        if (filename.contains(".txt"))
+            transaction.setContentFormatter(new TextFileFormat(transaction));
+        if (filename.contains(".db"))
+            transaction.setContentFormatter(new DatabaseFileFormat(transaction));
     }
 
     public boolean remove(Transaction transaction) {
@@ -67,6 +75,10 @@ public class Account {
 
     public String getName() {
         return name;
+    }
+
+    public String getFilename() {
+        return filename;
     }
 
     public ObservableList<Transaction> getList() {
