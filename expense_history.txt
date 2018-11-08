@@ -1,6 +1,12 @@
-2018-01-01      200.0      deposit      noted
-2018-11-06      10.0      deposit      undefined
-2018-11-06      100.0      deposit      undefined
-2018-11-06      50.0      expense      test
-2018-11-07      399.5      deposit      again
-2018-11-08      22.0      expense      change
+   0  2018-01-01      200.0   deposit      noted
+   1  2018-11-06       10.0   deposit      undefined
+   2  2018-11-06      100.0   deposit      undefined
+   3  2018-11-06       50.0   expense      test
+   4  2018-11-07      399.5   deposit      again
+   5  2018-11-08       22.0   expense      change
+   6  2018-11-08      20.50   deposit      food
+   7  2018-11-08    1500.00   expense      mouse
+   8  2018-11-01   15000.00   deposit      salary
+   9  2018-11-01   11111.25   deposit      salary
+  10  2018-11-01   11111.25   deposit      salary
+  11  2018-11-08     123.00   deposit      undefined

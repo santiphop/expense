@@ -21,12 +21,13 @@ public class JDBCSqliteConnection {
                 ResultSet resultSet = statement.executeQuery(query);
 
                 while (resultSet.next()) {
-                    String date = resultSet.getString(1);
-                    double amount = resultSet.getDouble(2);
-                    String type = resultSet.getString(3);
-                    String note = resultSet.getString(4);
+                    int id = resultSet.getInt(1);
+                    String date = resultSet.getString(2);
+                    double amount = resultSet.getDouble(3);
+                    String type = resultSet.getString(4);
+                    String note = resultSet.getString(5);
 
-                    System.out.println("date:"+date+" amount:"+amount+" type: "+type+" note: "+note);
+                    System.out.println("id:"+id+" date:"+date+" amount:"+amount+" type: "+type+" note: "+note);
                 }
             }
         } catch (ClassNotFoundException e) {

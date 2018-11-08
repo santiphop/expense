@@ -26,6 +26,7 @@ public class Account {
 
     public void add(Transaction transaction) {
         transactions.add(transaction);
+        transaction.setId(transactions.indexOf(transaction));
     }
 
     public boolean remove(Transaction transaction) {

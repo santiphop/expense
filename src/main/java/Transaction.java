@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 
 public class Transaction {
+    private int id;
     private LocalDate date;
     private double amount;
     private String type;
@@ -22,21 +23,21 @@ public class Transaction {
     }
 
     public String formatContent() {
-        String content = "";
-        content += date;
-        content += "      ";
-        content += amount;
-        content += "      ";
-        content += type;
-        content += "      ";
-        content += note;
-        content += "\n";
-        return content;
+        return String.format("%4d  %10s%11.2f%10s      %-10s\n",
+                id, String.valueOf(date), amount, type, note);
     }
 
     public void setAmount(double amount) {
         this.amount = amount;
         checkType();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setDate(LocalDate date) {

@@ -27,9 +27,10 @@ public class MyHeader {
             while ((line = buffer.readLine()) != null) {
                 // "\\s" == any spaces
                 // "\\S" == any string
+                line = line.trim();
                 String[] splitLine = line.split("\\s+");
                 account.add(new Transaction(
-                        convertToDate(splitLine[0]), Double.parseDouble(splitLine[1]), splitLine[2], splitLine[3]
+                        convertToDate(splitLine[1]), Double.parseDouble(splitLine[2]), splitLine[3], splitLine[4]
                 ));
             }
 
