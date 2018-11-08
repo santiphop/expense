@@ -12,7 +12,7 @@ public class UnitTestAccount {
 
     @BeforeEach
     void init() {
-        account = new Account("Santiphop");
+        account = new Account(Main.nameAccount);
     }
 
     @Test
@@ -22,27 +22,27 @@ public class UnitTestAccount {
 
     @Test
     void addIncomeTest() {
-        account.add(new Transaction(LocalDate.now(), 100, ""));
+        account.add(new Transaction(LocalDate.now(), 100, "deposit"));
         assertEquals(100, account.getBalance());
     }
 
     @Test
     void addExpenseTest() {
-        account.add(new Transaction(LocalDate.now(), -100, ""));
+        account.add(new Transaction(LocalDate.now(), 100, "expense"));
         assertEquals(-100, account.getBalance());
     }
 
     @Test
     void expenseMoreThanIncomeTest() {
-        account.add(new Transaction(LocalDate.now(), -100, ""));
-        account.add(new Transaction(LocalDate.now(), 50, ""));
+        account.add(new Transaction(LocalDate.now(), 100, "expense"));
+        account.add(new Transaction(LocalDate.now(), 50, "deposit"));
         assertEquals(-50, account.getBalance());
     }
 
     @Test
     void incomeMoreThanExpenseTest() {
-        account.add(new Transaction(LocalDate.now(), 100, ""));
-        account.add(new Transaction(LocalDate.now(), -50, ""));
+        account.add(new Transaction(LocalDate.now(), 100, "deposit"));
+        account.add(new Transaction(LocalDate.now(), 50, "expense"));
         assertEquals(50, account.getBalance());
     }
 

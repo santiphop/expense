@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * Created by 708 on 9/7/2018.
  */
 public class StepDefAccount {
+
     Account account;
 
     @Before

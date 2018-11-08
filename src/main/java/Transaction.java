@@ -7,20 +7,18 @@ public class Transaction {
     private String category;
     private String note;
 
-    public Transaction(LocalDate date, double amount, String note) {
-        this.amount = amount;
-        checkType();
-        this.date = date;
-        this.category = "undefined";
-        this.note = (note.length() == 0) ? "undefined" : note;
+    public Transaction(LocalDate date, double amount, String type, String note) {
+        if (amount >= 0) {
+            this.amount = amount;
+            this.type = type;
+            this.date = date;
+            this.category = "undefined";
+            this.note = (note.length() == 0) ? "undefined" : note;
+        }
     }
 
-    public Transaction(LocalDate date, double amount, String type, String note) {
-        this.amount = amount;
-        this.type = type;
-        this.date = date;
-        this.category = "undefined";
-        this.note = (note.length() == 0) ? "undefined" : note;
+    public Transaction(LocalDate date, double amount, String type) {
+        this(date, amount, type, "");
     }
 
     public String formatContent() {
@@ -28,6 +26,8 @@ public class Transaction {
         content += date;
         content += "      ";
         content += amount;
+        content += "      ";
+        content += type;
         content += "      ";
         content += note;
         content += "\n";
@@ -76,6 +76,12 @@ public class Transaction {
     }
 
     private void checkType() {
+        if (amount >= 0) {
+            type = "deposit";
+        } else {
+            type = "expense";
+            amount = -amount;
+        }
         type = (amount >= 0) ? "deposit" : "expense";
     }
 }

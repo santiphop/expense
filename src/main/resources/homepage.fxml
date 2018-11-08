@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -25,24 +26,39 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Button fx:id="addButton" layoutX="33.0" layoutY="341.0" mnemonicParsing="false" onAction="#add" text="Add" />
-        <Label layoutX="56.0" layoutY="244.0" text="Note">
+        <Button fx:id="addButton" layoutX="166.0" layoutY="341.0" mnemonicParsing="false" onAction="#add" text="Add" />
+        <Label layoutX="55.0" layoutY="282.0" text="Note">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
         <TextField fx:id="dateField" layoutX="157.0" layoutY="136.0" />
         <TextField fx:id="amountField" layoutX="157.0" layoutY="191.0" />
-        <TextField fx:id="noteField" layoutX="157.0" layoutY="247.0" prefHeight="25.0" prefWidth="167.0" />
+        <TextField fx:id="noteField" layoutX="157.0" layoutY="281.0" prefHeight="25.0" prefWidth="167.0" />
         <Label fx:id="nameLabel" layoutX="157.0" layoutY="86.0" prefHeight="25.0" prefWidth="149.0" text="LabelName" />
         <TableView fx:id="tableView" layoutX="400.0" layoutY="50.0" prefHeight="500.0" prefWidth="360.0">
             <columns>
                 <TableColumn fx:id="dateCol" prefWidth="100.0" text="Date" />
                 <TableColumn fx:id="amountCol" minWidth="1.66668701171875" prefWidth="83.0" text="Amount" />
                 <TableColumn fx:id="typeCol" minWidth="0.0" text="Type" />
-                <TableColumn fx:id="noteCol" prefWidth="112.0" text="Detail" />
+                <TableColumn fx:id="noteCol" prefWidth="104.0" text="Note" />
             </columns>
         </TableView>
-        <Button fx:id="editButton" layoutX="107.0" layoutY="341.0" mnemonicParsing="false" onAction="#edit" text="Edit" />
+        <Button fx:id="editButton" layoutX="290.0" layoutY="341.0" mnemonicParsing="false" onAction="#edit" text="Edit" />
+      <Button fx:id="balanceButton" layoutX="33.0" layoutY="397.0" mnemonicParsing="false" onAction="#showBalance" text="Balance" />
+      <Button fx:id="incomeButton" layoutX="149.0" layoutY="397.0" mnemonicParsing="false" onAction="#showIncome" text="Income" />
+      <Button fx:id="expenseButton" layoutX="265.0" layoutY="397.0" mnemonicParsing="false" onAction="#showExpense" text="Expense" />
+      <Label fx:id="amountLabel" alignment="CENTER_RIGHT" layoutX="110.0" layoutY="470.0" prefHeight="26.0" prefWidth="74.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="thb" layoutX="195.0" layoutY="470.0" text="THB" visible="false">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="depositRadio" layoutX="52.0" layoutY="240.0" mnemonicParsing="false" onAction="#depositRadioSelect" text="Deposit" />
+      <RadioButton fx:id="expenseRadio" layoutX="186.0" layoutY="240.0" mnemonicParsing="false" onAction="#expenseRadioSelect" text="Expense" />
     </children>
 </AnchorPane>

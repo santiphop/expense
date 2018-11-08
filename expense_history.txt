@@ -1,5 +1,6 @@
-2018-01-01      200.0      noted
-2018-11-06      10.0      undefined
-2018-11-06      100.0      100
-2018-11-06      -50.0      test
-2018-11-07      399.5      food
+2018-01-01      200.0      deposit      noted
+2018-11-06      10.0      deposit      undefined
+2018-11-06      100.0      deposit      undefined
+2018-11-06      50.0      expense      test
+2018-11-07      399.5      deposit      again
+2018-11-08      22.0      expense      change

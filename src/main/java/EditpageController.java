@@ -2,9 +2,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
@@ -15,6 +13,8 @@ import java.time.LocalDate;
 public class EditpageController {
     private Transaction selectedTransaction;
     private Account account;
+    private String sRadio;
+    ToggleGroup typeGroup = new ToggleGroup();
 
     @FXML
     Label nameLabel;
@@ -27,10 +27,27 @@ public class EditpageController {
     @FXML
     Button cancelButton;
     @FXML
-    Button editButton;
+    Button saveButton;
+    @FXML
+    protected RadioButton depositRadio;
+    @FXML
+    protected RadioButton expenseRadio;
+
+    @FXML
+    void depositRadioSelect() {
+        sRadio = depositRadio.getText();
+    }
+
+    @FXML
+    void expenseRadioSelect() {
+        sRadio = expenseRadio.getText();
+    }
+
 
     @FXML
     void initialize() {
+        depositRadio.setToggleGroup(typeGroup);
+        expenseRadio.setToggleGroup(typeGroup);
         nameLabel.setText(HomepageController.getAccount().getName());
         selectedTransaction = HomepageController.getSelectedTransaction();
         account = HomepageController.getAccount();
@@ -45,11 +62,13 @@ public class EditpageController {
     }
 
     @FXML
-    void edit(ActionEvent event) {
-        selectedTransaction.setDate(convertToDate(dateTextField.getText()));
+    void save(ActionEvent event) {
+        selectedTransaction.setDate(MyHeader.convertToDate(dateTextField.getText()));
         selectedTransaction.setAmount(Double.parseDouble(amountTextField.getText()));
-        selectedTransaction.setNote(amountTextField.getText());
-        writeFile(account.formatContent(), Main.filename);
+        if (sRadio != null)
+            selectedTransaction.setType(sRadio.toLowerCase());
+        selectedTransaction.setNote(noteTextField.getText());
+        MyHeader.writeFile(account.formatContent(), Main.filename, false);
         changePage("homepage.fxml", event);
     }
 
@@ -64,25 +83,6 @@ public class EditpageController {
         } catch(IOException e1){
             e1.printStackTrace();
         }
-    }
-
-    private void writeFile(String content, String filename) {
-        try (BufferedWriter buffer = new BufferedWriter(new FileWriter(filename))) {
-            buffer.write(content);
-            buffer.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private LocalDate convertToDate(String currentDate) {
-        String[] date = currentDate.split("-");
-        int[] intDate = new int[3];
-        for (int i = 0; i < 3; i++) {
-            intDate[i]=Integer.parseInt(date[i]);
-        }
-        return LocalDate.of(intDate[0], intDate[1], intDate[2]);
     }
 
 }

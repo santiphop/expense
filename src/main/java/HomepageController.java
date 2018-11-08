@@ -15,6 +15,10 @@ public class HomepageController {
 
     private static Transaction selectedTransaction;
 
+    ToggleGroup typeGroup = new ToggleGroup();
+
+    private String sRadio;
+
     @FXML
     protected Label nameLabel;
     @FXML
@@ -22,11 +26,26 @@ public class HomepageController {
     @FXML
     protected Button editButton;
     @FXML
+    protected Button balanceButton;
+    @FXML
+    protected Button incomeButton;
+    @FXML
+    protected Button expenseButton;
+    @FXML
+    protected Label amountLabel;
+    @FXML
+    protected Label thb;
+    @FXML
     protected TextField dateField;
     @FXML
     protected TextField amountField;
     @FXML
     protected TextField noteField;
+    @FXML
+    protected RadioButton depositRadio;
+    @FXML
+    protected RadioButton expenseRadio;
+
     @FXML
     protected TableView<Transaction> tableView;
     @FXML
@@ -39,9 +58,21 @@ public class HomepageController {
     protected TableColumn noteCol;
 
     @FXML
+    void depositRadioSelect() {
+        sRadio = depositRadio.getText();
+    }
+
+    @FXML
+    void expenseRadioSelect() {
+        sRadio = expenseRadio.getText();
+    }
+
+    @FXML
     void initialize(){
         nameLabel.setText(account.getName());
         dateField.setText(String.valueOf(LocalDate.now()));
+        depositRadio.setToggleGroup(typeGroup);
+        expenseRadio.setToggleGroup(typeGroup);
         displayTable();
     }
 
@@ -49,21 +80,40 @@ public class HomepageController {
     void add(ActionEvent event){
         String currentDate = dateField.getText();
         String currentAmount = amountField.getText();
+        String currentType = sRadio;
         String currentNote = noteField.getText();
         double amount = Double.parseDouble(currentAmount);
-        Transaction currentTransaction = new Transaction(convertToDate(currentDate), amount, currentNote);
+        String type = currentType.toLowerCase();
+        Transaction currentTransaction = new Transaction(MyHeader.convertToDate(currentDate), amount, type, currentNote);
         account.add(currentTransaction);
         displayTable();
         clearAllTextField();
         String content = currentTransaction.formatContent();
-        writeFile(content, Main.filename);
+        MyHeader.writeFile(content, Main.filename, true);
     }
 
     @FXML
     void edit(ActionEvent event){
         selectedTransaction = tableView.getSelectionModel().getSelectedItem();
         changePage("editpage.fxml", event);
+    }
 
+    @FXML
+    void showBalance(ActionEvent event) {
+        amountLabel.setText(String.valueOf(account.getBalance()));
+        thb.setVisible(true);
+    }
+
+    @FXML
+    void showIncome(ActionEvent event) {
+        amountLabel.setText(String.valueOf(account.getDeposit()));
+        thb.setVisible(true);
+    }
+
+    @FXML
+    void showExpense(ActionEvent event) {
+        amountLabel.setText(String.valueOf(account.getExpense()));
+        thb.setVisible(true);
     }
 
     public static Transaction getSelectedTransaction() {
@@ -77,15 +127,6 @@ public class HomepageController {
     private void clearAllTextField() {
         amountField.setText("");
         noteField.setText("");
-    }
-
-    private LocalDate convertToDate(String currentDate) {
-        String[] date = currentDate.split("-");
-        int[] intDate = new int[3];
-        for (int i = 0; i < 3; i++) {
-            intDate[i]=Integer.parseInt(date[i]);
-        }
-        return LocalDate.of(intDate[0], intDate[1], intDate[2]);
     }
 
     private void displayTable() {
@@ -107,16 +148,6 @@ public class HomepageController {
             stage.show();
         } catch(IOException e1){
             e1.printStackTrace();
-        }
-    }
-
-    private void writeFile(String content, String filename) {
-        try (BufferedWriter buffer = new BufferedWriter(new FileWriter(filename, true))) {
-            buffer.write(content);
-            buffer.flush();
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
