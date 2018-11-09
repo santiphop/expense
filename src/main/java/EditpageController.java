@@ -10,8 +10,9 @@ import java.io.IOException;
 public class EditpageController {
     private Transaction selectedTransaction;
     private Account account;
-    private String sRadio;
-    ToggleGroup typeGroup = new ToggleGroup();
+    private String sRadio = null;
+    private ToggleGroup typeGroup = new ToggleGroup();
+    private boolean isSaveable = false;
 
     @FXML
     Label nameLabel;
@@ -33,11 +34,15 @@ public class EditpageController {
     @FXML
     void depositRadioSelect() {
         sRadio = depositRadio.getText();
+        isSaveable = true;
+        setSaveButton();
     }
 
     @FXML
     void expenseRadioSelect() {
         sRadio = expenseRadio.getText();
+        isSaveable = true;
+        setSaveButton();
     }
 
 
@@ -64,8 +69,12 @@ public class EditpageController {
         selectedTransaction.setAmount(Double.parseDouble(amountTextField.getText()));
         if (sRadio != null)
             selectedTransaction.setType(sRadio.toLowerCase());
+        else System.out.println(sRadio);
         selectedTransaction.setNote(noteTextField.getText());
-        MyHeader.writeTextFile(account.formatContent(), Main.txtfilename, false);
+        if (account.getFilename().contains(".txt"))
+           MyHeader.writeTextFile(account.formatContent(), Main.txtfilename, false);
+        if (account.getFilename().contains(".db"))
+           MyHeader.updateDBFile(selectedTransaction.getUpdateQuery(), account.getFilename());
         changePage("homepage.fxml", event);
     }
 
@@ -81,5 +90,11 @@ public class EditpageController {
             e1.printStackTrace();
         }
     }
+
+    private void setSaveButton() {
+        boolean bool = isSaveable;
+        saveButton.setDisable(!bool);
+    }
+
 
 }
